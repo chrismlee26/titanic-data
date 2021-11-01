@@ -1,3 +1,5 @@
+const data = require('./titanic-passengers.json');
+
 // ================================================================
 
 // Titanic Dataset challenges! 
@@ -21,9 +23,11 @@
 // Return the total number of passengers. 
 // Returns a number.
 
-const getTotalPassengers = (data) => {
-	return 0
+function getTotalPassengers(data) {
+	return (data.length-1)
 }
+
+console.log(getTotalPassengers(data))
 
 // 2 ---------------------------------------------------------------
 // Return the number of surviving passengers. A passenger survived 
@@ -31,8 +35,11 @@ const getTotalPassengers = (data) => {
 // Return a number.
 
 const getSurvivorCount = (data) => {
-	return 0
+	return data.filter(data => data.fields.survived == 'Yes').length
 }
+
+console.log(getSurvivorCount(data))
+
 
 // 3 ---------------------------------------------------------------
 // Return the number of passengers who did not survive. A passenger
@@ -40,8 +47,10 @@ const getSurvivorCount = (data) => {
 // Return a number.
 
 const getCasualityCount = (data) => {
-	return 0
+	return data.filter(data => data.fields.survived == "No").length
 }
+
+console.log(getCasualityCount(data))
 
 // 4 ---------------------------------------------------------------
 // Return the number of passengers in any class. This function 
