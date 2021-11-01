@@ -58,9 +58,12 @@ console.log(getCasualityCount(data))
 // passengers whose pclass matches and return the count. 
 // Return a number
 
-const countPassengersInClass = (data, pclass) => {
-	return 0
+const countPassengersInClass = (data, passengerClass) => {
+	return data.filter(data => data.fields.pclass == passengerClass).length
+	
 }
+
+console.log(countPassengersInClass(data, '2'))
 
 // 5 ---------------------------------------------------------------
 // Return the number of survivors in a class. This function takes 
@@ -68,8 +71,14 @@ const countPassengersInClass = (data, pclass) => {
 // Return the count of survivors in that pclass.
 
 const getSurvivorCountForClass = (data, pclass) => {
-	return 0
+	// take params data & pclass
+	// check p-class as param
+	// return survivors.length of pclass
+	let classCheck = data.filter(data => data.fields.pclass == pclass)
+	return classCheck.filter(data => data.fields.survived == 'Yes').length
 }
+
+console.log(getSurvivorCountForClass(data, '3'))
 
 // 6 ---------------------------------------------------------------
 // Return the number of passengers who did not survive in a class.
@@ -77,24 +86,39 @@ const getSurvivorCountForClass = (data, pclass) => {
 // the number of passengers who did not survive for that class. 
 
 const getCasualityCountForClass = (data, pclass) => {
-	return 0
+	let classCheck = data.filter(data => data.fields.pclass == pclass)
+	return classCheck.filter(data => data.fields.survived == 'No').length
 }
+
+console.log(getCasualityCountForClass(data, '1'))
 
 // 7 ---------------------------------------------------------------
 // Return the age of the youngest passenger. You'll need to filter
 // passenger data where the age is missing. 
 
 const getMinAge = (data) => {
-	return 0
+	// escape for null and no number data (filter)
+	// filter data for lowest age
+	const notNull = data.filter(data => data.fields.age != null || 0 || NaN)
+	return notNull.reduce((acc, curr) => {
+		return Math.min(acc, curr.fields.age)
+	}, Infinity)
 }
+
+console.log(getMinAge(data))
 
 // 8 ---------------------------------------------------------------
 // Return the age of the oldest passenger. Filter passengers where 
 // age is missing.
 
 const getMaxAge = (data) => {
-	return 0
+	const notNull = data.filter(data => data.fields.age != null || 0 || NaN)
+	return notNull.reduce((acc, curr) => {
+		return Math.max(acc, curr.fields.age)
+	}, -Infinity)
 }
+
+console.log(getMaxAge(data))
 
 // 9 ---------------------------------------------------------------
 // Return the number of passengers that embarked at a given stop. 
