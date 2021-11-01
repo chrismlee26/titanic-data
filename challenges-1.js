@@ -127,32 +127,47 @@ console.log(getMaxAge(data))
 // embarkation code. Return the count of passenegers with that code.
 
 const getEmbarkedCount = (data, embarked) => {
-	return 0
+	let checkEmbarked = data.filter(data => data.fields.embarked == embarked)
+	return checkEmbarked.filter(data => data.fields.embarked == embarked).length
 }
+
+console.log(getEmbarkedCount(data, 'Q'))
 
 // 10 ---------------------------------------------------------------
 // Return the lowest fair paid by any passenger. The fare is missing 
 // for some passengers you'll need to filter this out!
 
 const getMinFare = (data) => {
-	return -1
+	let validFare = data.filter(data => data.fields.fare != 0 || NaN)
+	return validFare.reduce((acc, curr) => {
+		return Math.min(acc, curr.fields.fare)
+	}, Infinity)
 }
+
+console.log(getMinFare(data))
 
 // 11 ---------------------------------------------------------------
 // Return the highest fare paid by any passenger. Some of the 
 // passengers are missing data for fare. Be sure to filter these! 
 
 const getMaxFare = (data) => {
-	return 0
+	let validFare = data.filter(data => data.fields.fare != 0 || NaN)
+	return validFare.reduce((acc, curr) => {
+		return Math.max(acc, curr.fields.fare)
+	}, -Infinity)
 }
+
+console.log(getMaxFare(data))
 
 // 12 ---------------------------------------------------------------
 // Return the count of passengers by gender. Each passenger object has
 // "sex" property that is either "male" or "female"
 
 const getPassengersByGender = (data, gender) => {
-	return 0
+	return data.filter((data) => (data.fields.sex) == gender).length
 }
+
+console.log(getPassengersByGender(data, 'female'))
 
 // 13 ---------------------------------------------------------------
 // Return the number of passengers who survived by gender. This 
@@ -160,15 +175,21 @@ const getPassengersByGender = (data, gender) => {
 // to the "sex" property and check the "survived" property. 
 
 const getSurvivorsByGender = (data, gender) => {
-	return 0
+	let checkGender = data.filter(data => data.fields.sex == gender)
+	return checkGender.filter(data => data.fields.survived == 'Yes').length
 }
+
+console.log(getSurvivorsByGender(data, 'female'))
 
 // 14 ---------------------------------------------------------------
 // Return the number of passengers who did not survived by gender. 
 
 const getCasualitiesByGender = (data, gender) => {
-	return 0
+	let checkGender = data.filter(data => data.fields.sex == gender)
+	return checkGender.filter(data => data.fields.survived == 'No').length
 }
+
+console.log(getCasualitiesByGender(data, 'male'))
 
 // 15 --------------------------------------------------------------
 // Return the total of all fares paid. Add up all of the fares and 
