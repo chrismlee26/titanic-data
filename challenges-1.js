@@ -247,13 +247,13 @@ console.log(getMedianFare(data))
 // available. 
 
 const getAverageAge = (data) => {
-	let validAge = data.filter(data => data.fields.age != 0 || NaN)
+	let validAge = data.filter(data => data.fields.age != null || 0 || NaN)
 	return (validAge.reduce((acc, curr) => {
 		return (acc + curr.fields.age)
-	}, 0) / validAge.length).toFixed(2)
+	}, 0) / validAge.length).toFixed(2)	
 }
 
-console.log(getAverageAge(data), "~~~~~~~")
+console.log(getAverageAge(data))
 
 
 
@@ -262,14 +262,14 @@ console.log(getAverageAge(data), "~~~~~~~")
 // finding the middle value. 
 
 const getMedianAge = (data) => {
-	let validAge = data.filter(data => data.fields.age != 0 || NaN)
+	let validAge = data.filter(data => data.fields.age != null || 0 || NaN)
 	let medianIndex = 0
 	if (validAge.length % 2 == 0) {
 		medianIndex = (validAge.length / 2) - 1
-		return ((validAge[medianIndex].fields.age) + validAge[medianIndex + 1].fields.age) / 2
+		return (validAge[medianIndex].fields.age + validAge[medianIndex + 1].fields.age) / 2
 	} else {
 		medianIndex = Math.floor(validAge.length / 2)
-		return (validAge[medianIndex].fields.age)
+		return validAge[medianIndex].fields.age
 	}
 }
 
@@ -280,10 +280,14 @@ console.log(getMedianAge(data))
 // the total number. 
 
 const getAverageAgeByGender = (data, gender) => {
-	return 0
+	let validAge = data.filter(data => data.fields.age != null || 0 || NaN)
+	let checkGender = validAge.filter(validAge => validAge.fields.sex == gender)
+	return (checkGender.reduce((acc, curr) => {
+		return (acc + curr.fields.age)
+	}, 0) / checkGender.length).toFixed(2)	
 }
 
-// console.log(getAverageAgeByGender(data, 'male'))
+console.log(getAverageAgeByGender(data, 'male'))
 
 // --------------------------------------------------------------
 // --------------------------------------------------------------
