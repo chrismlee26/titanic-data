@@ -24,7 +24,7 @@ const data = require('./titanic-passengers.json');
 // Returns a number.
 
 function getTotalPassengers(data) {
-	return (data.length-1)
+	return (data.length)
 }
 
 console.log(getTotalPassengers(data))
@@ -138,7 +138,7 @@ console.log(getEmbarkedCount(data, 'Q'))
 // for some passengers you'll need to filter this out!
 
 const getMinFare = (data) => {
-	let validFare = data.filter(data => data.fields.fare != 0 || NaN)
+	let validFare = data.filter(data => data.fields.fare != NaN || Null)
 	return validFare.reduce((acc, curr) => {
 		return Math.min(acc, curr.fields.fare)
 	}, Infinity)
@@ -200,7 +200,7 @@ const getTotalFare = (data) => {
 	let validFares = data.filter(data => data.fields.fare != 0 || NaN)
 	return validFares.reduce((acc, curr) => {
 		return (acc + curr.fields.fare)
-	}, 0).toFixed(2)
+	}, 0)
 }
 
 console.log(getTotalFare(data))
@@ -211,10 +211,10 @@ console.log(getTotalFare(data))
 // missing a fare! 
 
 const getAverageFare = (data) => {
-	let validFares = data.filter(data => data.fields.fare != 0 || NaN)
+	let validFares = data.filter(data => data.fields.fare != NaN || null)
 	return (validFares.reduce((acc, curr) => {
 		return (acc + curr.fields.fare)
-	}, 0) / validFares.length).toFixed(2)
+	}, 0) / validFares.length)
 }
 
 console.log(getAverageFare(data))
@@ -228,7 +228,7 @@ console.log(getAverageFare(data))
 // 4 + 5 = 9 / 2 median is 4.5!
 
 const getMedianFare = (data) => {
-	let validFares = data.filter(data => data.fields.fare != 0 || NaN)
+	let validFares = data.filter(data => data.fields.fare != NaN)
 	let medianIndex = 0
 	if (validFares.length % 2 == 0) {
 		medianIndex = (validFares.length / 2) - 1
@@ -247,10 +247,10 @@ console.log(getMedianFare(data))
 // available. 
 
 const getAverageAge = (data) => {
-	let validAge = data.filter(data => data.fields.age != null || 0 || NaN)
+	let validAge = data.filter(data => data.fields.age != null || NaN)
 	return (validAge.reduce((acc, curr) => {
 		return (acc + curr.fields.age)
-	}, 0) / validAge.length).toFixed(2)	
+	}, 0) / validAge.length)
 }
 
 console.log(getAverageAge(data))
@@ -262,7 +262,7 @@ console.log(getAverageAge(data))
 // finding the middle value. 
 
 const getMedianAge = (data) => {
-	let validAge = data.filter(data => data.fields.age != null || 0 || NaN)
+	let validAge = data.filter(data => data.fields.age != null || NaN)
 	let medianIndex = 0
 	if (validAge.length % 2 == 0) {
 		medianIndex = (validAge.length / 2) - 1
@@ -280,11 +280,11 @@ console.log(getMedianAge(data))
 // the total number. 
 
 const getAverageAgeByGender = (data, gender) => {
-	let validAge = data.filter(data => data.fields.age != null || 0 || NaN)
+	let validAge = data.filter(data => data.fields.age != null || NaN)
 	let checkGender = validAge.filter(validAge => validAge.fields.sex == gender)
 	return (checkGender.reduce((acc, curr) => {
 		return (acc + curr.fields.age)
-	}, 0) / checkGender.length).toFixed(2)	
+	}, 0) / checkGender.length)
 }
 
 console.log(getAverageAgeByGender(data, 'male'))
