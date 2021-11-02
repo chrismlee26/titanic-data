@@ -30,7 +30,7 @@ beforeAll((done) => {
 
 describe.skip('Challenge 2 Titanic', () => {
 
-	// Beucause these tests return long arrays of data it was 
+	// Because these tests return long arrays of data it was 
 	// impractical to hard code all these arrays here so the 
 	// below generates the lists from the data! The code below 
 	// are the answers to the questions. Don't peak unless you 

@@ -1,3 +1,4 @@
+const data = require('./titanic-passengers.json');
 // ================================================================
 
 // Titanic Dataset challenges! 
@@ -25,8 +26,10 @@
 // Or if property = 'age' -> [40, 26, 22, 28, 23, 45, 21, ...]
 
 const getAllValuesForProperty = (data, property) => {
-	return []
+	return data.map(data => data.fields[property])
 }
+
+// console.log(getAllValuesForProperty(data, 'fare'));
 
 // 2 -------------------------------------------------------------
 // Return an array where a given property matches the given value
@@ -34,8 +37,10 @@ const getAllValuesForProperty = (data, property) => {
 // array of all the male passengers [{...}, {...}, {...}, ...]
 
 const filterByProperty = (data, property, value) => {
-	return []
+	return data.map(data => data.fields[property] === value)
 }
+
+// console.log(filterByProperty(data, 'sex', 'age'));
 
 // 3 -------------------------------------------------------------
 // Filter out missing or null values
@@ -43,8 +48,10 @@ const filterByProperty = (data, property, value) => {
 // given property have been removed
 
 const filterNullForProperty = (data, property) => {
-	return []
+	return data.filter(data => data.fields[property] !== null || NaN || undefined)
 }
+
+// console.log(filterNullForProperty(data, 'age'));
 
 // 4 -------------------------------------------------------------
 // Abstract the sum by creating a function that returns the sum 
@@ -52,8 +59,14 @@ const filterNullForProperty = (data, property) => {
 // Return the total of all values for a given property. This
 
 const sumAllProperty = (data, property) => {
-	return 0
+	let filterFirst = data.filter(data => data.fields[property] != null || NaN || undefined)
+	return filterFirst.reduce((acc, filterFirst) => {
+		return (acc += filterFirst.fields[property])
+	}, 0)
 }
+
+// console.log(sumAllProperty(data, "age"), '4.1')
+// console.log(sumAllProperty(data, "fare"), '4.2')
 
 
 // 5 -------------------------------------------------------------
@@ -64,11 +77,20 @@ const sumAllProperty = (data, property) => {
 // and Q, and a couple passengers have undefined for this property. 
 // So the output should be: { S: 644, C: 168, Q: 77, undefined: 2 }
 // That is 644 passengers embarked at South Hampton. 168 embarked 
-// at Cherbourg, 77 emabrked at Queenstown, and 2 are undedfined
+// at Cherbourg, 77 emabrked at Queenstown, and 2 are undefined
 
 const countAllProperty = (data, property) => {
-	return {}
+	data.reduce((acc, p) => {
+		if (p.fields[property] in acc) {
+			acc[p.fields[property]]++
+		} else {
+			acc[p.fields[property]] = 1
+		}
+		return acc
+	}, {})
 }
+console.log(countAllProperty(data, "embarked"))
+
 
 
 // 6 ------------------------------------------------------------

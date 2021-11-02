@@ -155,6 +155,10 @@ const getMaxFare = (data) => {
 	return validFare.reduce((acc, curr) => {
 		return Math.max(acc, curr.fields.fare)
 	}, -Infinity)
+
+	// Alternative solution that's way easier to understand
+	// const fares = validFare.map(p => p.fields.fare)
+	// return Math.max(...fares)
 }
 
 console.log(getMaxFare(data))
