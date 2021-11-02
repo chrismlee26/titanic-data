@@ -99,7 +99,7 @@ console.log(getCasualityCountForClass(data, '1'))
 const getMinAge = (data) => {
 	// escape for null and no number data (filter)
 	// filter data for lowest age
-	const notNull = data.filter(data => data.fields.age != null || 0 || NaN)
+	const notNull = data.filter(data => data.fields.age != null || NaN)
 	return notNull.reduce((acc, curr) => {
 		return Math.min(acc, curr.fields.age)
 	}, Infinity)
@@ -112,7 +112,7 @@ console.log(getMinAge(data))
 // age is missing.
 
 const getMaxAge = (data) => {
-	const notNull = data.filter(data => data.fields.age != null || 0 || NaN)
+	const notNull = data.filter(data => data.fields.age != null|| NaN)
 	return notNull.reduce((acc, curr) => {
 		return Math.max(acc, curr.fields.age)
 	}, -Infinity)
@@ -124,7 +124,7 @@ console.log(getMaxAge(data))
 // Return the number of passengers that embarked at a given stop. 
 // Each passenger has a embarked property with a value of: S, C,
 // or Q. This function takes in the passenger data and the 
-// embarkation code. Return the count of passenegers with that code.
+// embarkation code. Return the count of passengers with that code.
 
 const getEmbarkedCount = (data, embarked) => {
 	let checkEmbarked = data.filter(data => data.fields.embarked == embarked)
@@ -151,7 +151,7 @@ console.log(getMinFare(data))
 // passengers are missing data for fare. Be sure to filter these! 
 
 const getMaxFare = (data) => {
-	let validFare = data.filter(data => data.fields.fare != 0 || NaN)
+	let validFare = data.filter(data => data.fields.fare != null || NaN)
 	return validFare.reduce((acc, curr) => {
 		return Math.max(acc, curr.fields.fare)
 	}, -Infinity)
@@ -197,7 +197,7 @@ console.log(getCasualitiesByGender(data, 'male'))
 // where the fare is missing! 
 
 const getTotalFare = (data) => {
-	let validFares = data.filter(data => data.fields.fare != 0 || NaN)
+	let validFares = data.filter(data => data.fields.fare != null || NaN)
 	return validFares.reduce((acc, curr) => {
 		return (acc + curr.fields.fare)
 	}, 0)
@@ -228,15 +228,13 @@ console.log(getAverageFare(data))
 // 4 + 5 = 9 / 2 median is 4.5!
 
 const getMedianFare = (data) => {
-	let validFares = data.filter(data => data.fields.fare != NaN)
-	let medianIndex = 0
-	if (validFares.length % 2 == 0) {
-		medianIndex = (validFares.length / 2) - 1
-		return (validFares[medianIndex].fields.fare + validFares[medianIndex + 1].fields.fare) / 2
-	} else {
-		medianIndex = Math.floor(validFares.length / 2)
-		return validFares[medianIndex].fields.fare
+	const sorted = data.sort((a, b) => a.fields.fare - b.fields.fare);
+	const middle = Math.floor(sorted.length / 2);
+
+	if (sorted.length % 2) {
+		return sorted[middle].fields.fare;
 	}
+	return (sorted[middle - 1].fields.fare + sorted[middle].fields.fare) / 2.0;
 }
 
 console.log(getMedianFare(data))
@@ -263,14 +261,13 @@ console.log(getAverageAge(data))
 
 const getMedianAge = (data) => {
 	let validAge = data.filter(data => data.fields.age != null || NaN)
-	let medianIndex = 0
-	if (validAge.length % 2 == 0) {
-		medianIndex = (validAge.length / 2) - 1
-		return (validAge[medianIndex].fields.age + validAge[medianIndex + 1].fields.age) / 2
-	} else {
-		medianIndex = Math.floor(validAge.length / 2)
-		return validAge[medianIndex].fields.age
+	let sorted = validAge.sort((a, b) => a.fields.age - b.fields.age);
+	const middle = Math.floor(sorted.length / 2);
+
+	if (sorted.length % 2) {
+		return (sorted[middle - 1].fields.age + sorted[middle].fields.age) / 2.0;
 	}
+	return sorted[middle].fields.age;
 }
 
 console.log(getMedianAge(data))
