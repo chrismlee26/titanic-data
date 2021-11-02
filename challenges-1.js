@@ -197,8 +197,13 @@ console.log(getCasualitiesByGender(data, 'male'))
 // where the fare is missing! 
 
 const getTotalFare = (data) => {
-	return 0
+	let validFares = data.filter(data => data.fields.fare != 0 || NaN)
+	return validFares.reduce((acc, curr) => {
+		return (acc + curr.fields.fare)
+	}, 0).toFixed(2)
 }
+
+console.log(getTotalFare(data))
 
 // 16 --------------------------------------------------------------
 // Return the average fare paid. Add up all of the fares and divide 
@@ -206,8 +211,13 @@ const getTotalFare = (data) => {
 // missing a fare! 
 
 const getAverageFare = (data) => {
-	return 0
+	let validFares = data.filter(data => data.fields.fare != 0 || NaN)
+	return (validFares.reduce((acc, curr) => {
+		return (acc + curr.fields.fare)
+	}, 0) / validFares.length).toFixed(2)
 }
+
+console.log(getAverageFare(data))
 
 // 17 --------------------------------------------------------------
 // Return the median fare. The median is the value equal distance
@@ -218,8 +228,18 @@ const getAverageFare = (data) => {
 // 4 + 5 = 9 / 2 median is 4.5!
 
 const getMedianFare = (data) => {
-	return 0
+	let validFares = data.filter(data => data.fields.fare != 0 || NaN)
+	let medianIndex = 0
+	if (validFares.length % 2 == 0) {
+		medianIndex = (validFares.length / 2) - 1
+		return (validFares[medianIndex].fields.fare + validFares[medianIndex + 1].fields.fare) / 2
+	} else {
+		medianIndex = Math.floor(validFares.length / 2)
+		return validFares[medianIndex].fields.fare
+	}
 }
+
+console.log(getMedianFare(data))
 
 // 18 --------------------------------------------------------------
 // Return the average age of all passengers. Add all ages and divide 
@@ -227,16 +247,33 @@ const getMedianFare = (data) => {
 // available. 
 
 const getAverageAge = (data) => {
-	return 0
+	let validAge = data.filter(data => data.fields.fare != 0 || NaN)
+	return (validAge.reduce((acc, curr) => {
+		return (acc + curr.fields.fare)
+	}, 0) / validAge.length).toFixed(2)
 }
+
+console.log(getAverageAge(data))
+
+
 
 // 19 --------------------------------------------------------------
 // Return the median age from passengers. Do that median thing of 
 // finding the middle value. 
 
 const getMedianAge = (data) => {
-	return 0
+	let validAge = data.filter(data => data.fields.age != 0 || NaN)
+	let medianIndex = 0
+	if (validAge.length % 2 == 0) {
+		medianIndex = (validAge.length / 2) - 1
+		return (validAge[medianIndex].fields.age + validAge[medianIndex + 1].fields.age) / 2
+	} else {
+		medianIndex = Math.floor(validAge.length / 2)
+		return validAge[medianIndex].fields.age
+	}
 }
+
+console.log(getMedianAge(data))
 
 // 20 --------------------------------------------------------------
 // Add up all of the ages for the gender provided and divide by the 
