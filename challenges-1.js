@@ -243,17 +243,17 @@ console.log(getMedianFare(data))
 
 // 18 --------------------------------------------------------------
 // Return the average age of all passengers. Add all ages and divide 
-// by the number of passenegers. Be sure to filter where ages are not 
+// by the number of passengers. Be sure to filter where ages are not 
 // available. 
 
 const getAverageAge = (data) => {
-	let validAge = data.filter(data => data.fields.fare != 0 || NaN)
+	let validAge = data.filter(data => data.fields.age != 0 || NaN)
 	return (validAge.reduce((acc, curr) => {
-		return (acc + curr.fields.fare)
+		return (acc + curr.fields.age)
 	}, 0) / validAge.length).toFixed(2)
 }
 
-console.log(getAverageAge(data))
+console.log(getAverageAge(data), "~~~~~~~")
 
 
 
@@ -266,10 +266,10 @@ const getMedianAge = (data) => {
 	let medianIndex = 0
 	if (validAge.length % 2 == 0) {
 		medianIndex = (validAge.length / 2) - 1
-		return (validAge[medianIndex].fields.age + validAge[medianIndex + 1].fields.age) / 2
+		return ((validAge[medianIndex].fields.age) + validAge[medianIndex + 1].fields.age) / 2
 	} else {
 		medianIndex = Math.floor(validAge.length / 2)
-		return validAge[medianIndex].fields.age
+		return (validAge[medianIndex].fields.age)
 	}
 }
 
@@ -282,6 +282,8 @@ console.log(getMedianAge(data))
 const getAverageAgeByGender = (data, gender) => {
 	return 0
 }
+
+// console.log(getAverageAgeByGender(data, 'male'))
 
 // --------------------------------------------------------------
 // --------------------------------------------------------------
