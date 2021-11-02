@@ -231,10 +231,10 @@ const getMedianFare = (data) => {
 	const sorted = data.sort((a, b) => a.fields.fare - b.fields.fare);
 	const middle = Math.floor(sorted.length / 2);
 
-	if (sorted.length % 2) {
-		return sorted[middle].fields.fare;
+	if (sorted.length % 2 == 0) {
+		return (sorted[middle - 1].fields.fare + sorted[middle].fields.fare) / 2.0;
 	}
-	return (sorted[middle - 1].fields.fare + sorted[middle].fields.fare) / 2.0;
+	return sorted[middle].fields.fare;
 }
 
 console.log(getMedianFare(data))
@@ -264,8 +264,9 @@ const getMedianAge = (data) => {
 	let sorted = validAge.sort((a, b) => a.fields.age - b.fields.age);
 	const middle = Math.floor(sorted.length / 2);
 
-	if (sorted.length % 2) {
+	if (sorted.length % 2 == 0) {
 		return (sorted[middle - 1].fields.age + sorted[middle].fields.age) / 2.0;
+		
 	}
 	return sorted[middle].fields.age;
 }
