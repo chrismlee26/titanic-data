@@ -77,21 +77,18 @@ const sumAllProperty = (data, property) => {
 // and Q, and a couple passengers have undefined for this property. 
 // So the output should be: { S: 644, C: 168, Q: 77, undefined: 2 }
 // That is 644 passengers embarked at South Hampton. 168 embarked 
-// at Cherbourg, 77 emabrked at Queenstown, and 2 are undefined
+// at Cherbourg, 77 embarked at Queenstown, and 2 are undefined
 
-const countAllProperty = (data, property) => {
-	data.reduce((acc, p) => {
-		if (p.fields[property] in acc) {
-			acc[p.fields[property]]++
-		} else {
-			acc[p.fields[property]] = 1
-		}
-		return acc
-	}, {})
+const countAllProperty = (data, property) => { 
+	let count = {}
+	data.map(data => {
+			count[data.fields[property]] = count[data.fields[property]] + 1 || 1
+	})
+	return count
 }
-console.log(countAllProperty(data, "embarked"))
 
-
+// console.log(countAllProperty(data, "sex"))
+// console.log(countAllProperty(data, "embarked"))
 
 // 6 ------------------------------------------------------------
 // Make histogram. The goal is to return an array with values 
@@ -99,8 +96,32 @@ console.log(countAllProperty(data, "embarked"))
 // of items in each bucket.
 
 const makeHistogram = (data, property, step) => {
-	return []
+	// step = 0
+	// Map all values to a new variable with property as fields.property
+	// let fieldProperty = data
+		// .map(p => p.fields[property])
+		// make undefined = 0
+		// sort values 
+		// .sort((a, b) => a - b)
+		//  this returns an array of sorted values
+
+		// add all values together 
+		// divide by step
+
+		// Return: [bucket1: 0, bucket2: 0, bucket3: 0, bucket4: 0, bucket5: 0, bucket 6: 0]	
+		const fieldProperty = data
+			.map(p => p.fields[property])
+			.filter(p => p !== undefined)
+			.sort((a, b) => a - b)
+			.reduce((acc, p) => {
+				return (acc += p)
+			}
+			, 0)
 }
+
+console.log(makeHistogram(data, "fare", 10))
+// makeHistogram(data, "age", 15)
+// console.log(makeHistogram(data, "age", 2))
 
 // 7 ------------------------------------------------------------
 // normalizeProperty takes data and a property and returns an 
@@ -108,8 +129,15 @@ const makeHistogram = (data, property, step) => {
 // to divide each value by the maximum value in the array.
 
 const normalizeProperty = (data, property) => {
-	return []
+	const mapProperty = data
+		.filter(data => data.fields[property] !== undefined)
+		.map(data => data.fields[property])
+	const maxProperty = Math.max(...mapProperty)
+	return mapProperty.map(mapProperty => mapProperty / maxProperty)
 }
+
+// console.log(normalizeProperty(data, "age"))
+// console.log(normalizeProperty(data, "fare"))
 
 // 8 ------------------------------------------------------------
 // Write a function that gets all unique values for a property. 
@@ -119,8 +147,11 @@ const normalizeProperty = (data, property) => {
 // would return ['male', 'female']
 
 const getUniqueValues = (data, property) => {
-	return []
+	let checkValues = data.map(data => data.fields[property])
+	return Array.from(new Set(checkValues))
 }
+
+// console.log(getUniqueValues(data, 'sex'))
 
 // --------------------------------------------------------------
 // --------------------------------------------------------------

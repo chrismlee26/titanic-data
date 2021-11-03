@@ -76,6 +76,8 @@ const getSurvivorCountForClass = (data, pclass) => {
 	// return survivors.length of pclass
 	let classCheck = data.filter(data => data.fields.pclass == pclass)
 	return classCheck.filter(data => data.fields.survived == 'Yes').length
+
+	// return data.filter(p => p.fields.survived === "Yes" && p.fields.pclass === pclass).length
 }
 
 console.log(getSurvivorCountForClass(data, '3'))
@@ -99,7 +101,7 @@ console.log(getCasualityCountForClass(data, '1'))
 const getMinAge = (data) => {
 	// escape for null and no number data (filter)
 	// filter data for lowest age
-	const notNull = data.filter(data => data.fields.age != null || NaN)
+	const notNull = data.filter(data => data.fields.age != null || NaN )
 	return notNull.reduce((acc, curr) => {
 		return Math.min(acc, curr.fields.age)
 	}, Infinity)
@@ -129,6 +131,11 @@ console.log(getMaxAge(data))
 const getEmbarkedCount = (data, embarked) => {
 	let checkEmbarked = data.filter(data => data.fields.embarked == embarked)
 	return checkEmbarked.filter(data => data.fields.embarked == embarked).length
+
+	// Alternative solution to get [S, C, Q, undefined]....
+	// const emb = data.map(p => p.fields.embarked)
+	// const uni = new Set(emb)
+	// const uniEmb = Array.from(uni)
 }
 
 console.log(getEmbarkedCount(data, 'Q'))
@@ -138,7 +145,7 @@ console.log(getEmbarkedCount(data, 'Q'))
 // for some passengers you'll need to filter this out!
 
 const getMinFare = (data) => {
-	let validFare = data.filter(data => data.fields.fare != NaN || Null)
+	let validFare = data.filter(data => data.fields.fare !== NaN || null)
 	return validFare.reduce((acc, curr) => {
 		return Math.min(acc, curr.fields.fare)
 	}, Infinity)
@@ -151,7 +158,7 @@ console.log(getMinFare(data))
 // passengers are missing data for fare. Be sure to filter these! 
 
 const getMaxFare = (data) => {
-	let validFare = data.filter(data => data.fields.fare != null || NaN)
+	let validFare = data.filter(data => data.fields.fare !== null || NaN)
 	return validFare.reduce((acc, curr) => {
 		return Math.max(acc, curr.fields.fare)
 	}, -Infinity)
@@ -201,12 +208,15 @@ console.log(getCasualitiesByGender(data, 'male'))
 // where the fare is missing! 
 
 const getTotalFare = (data) => {
-	let validFares = data.filter(data => data.fields.fare != null || NaN)
-	return validFares.reduce((acc, curr) => {
-		return (acc + curr.fields.fare)
-	}, 0)
-}
+	// let validFares = data.filter(data => data.fields.fare !== null || NaN)
+	// return validFares.reduce((acc, curr) => {
+	// 	return (acc + curr.fields.fare)
+	// }, 0)
 
+	return data
+		.filter(data => data.fields.fare !== undefined)
+		.reduce((acc, curr) => acc + curr.fields.fare, 0)
+}
 console.log(getTotalFare(data))
 
 // 16 --------------------------------------------------------------
@@ -215,7 +225,7 @@ console.log(getTotalFare(data))
 // missing a fare! 
 
 const getAverageFare = (data) => {
-	let validFares = data.filter(data => data.fields.fare != NaN || null)
+	let validFares = data.filter(data => data.fields.fare !== NaN || null)
 	return (validFares.reduce((acc, curr) => {
 		return (acc + curr.fields.fare)
 	}, 0) / validFares.length)
@@ -282,7 +292,7 @@ console.log(getMedianAge(data))
 // the total number. 
 
 const getAverageAgeByGender = (data, gender) => {
-	let validAge = data.filter(data => data.fields.age != null || NaN)
+	let validAge = data.filter(data => (data.fields.age != null))
 	let checkGender = validAge.filter(validAge => validAge.fields.sex == gender)
 	return (checkGender.reduce((acc, curr) => {
 		return (acc + curr.fields.age)
