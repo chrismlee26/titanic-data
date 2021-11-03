@@ -96,32 +96,21 @@ const countAllProperty = (data, property) => {
 // of items in each bucket.
 
 const makeHistogram = (data, property, step) => {
-	// step = 0
-	// Map all values to a new variable with property as fields.property
-	// let fieldProperty = data
-		// .map(p => p.fields[property])
-		// make undefined = 0
-		// sort values 
-		// .sort((a, b) => a - b)
-		//  this returns an array of sorted values
-
-		// add all values together 
-		// divide by step
-
-		// Return: [bucket1: 0, bucket2: 0, bucket3: 0, bucket4: 0, bucket5: 0, bucket 6: 0]	
-		const fieldProperty = data
-			.map(p => p.fields[property])
-			.filter(p => p !== undefined)
-			.sort((a, b) => a - b)
-			.reduce((acc, p) => {
-				return (acc += p)
+	const fieldProperty = data
+		.reduce((acc, p) => {
+			if (acc[Math.floor(p.fields[property] / step)] === undefined) {
+				acc[Math.floor(p.fields[property] / step)] = 1
+			} else {
+				acc[Math.floor(p.fields[property] / step)] += 1
 			}
-			, 0)
+			return acc 
+		}, [])
+
+	return Array.from(fieldProperty, v => v || 0)
 }
 
 console.log(makeHistogram(data, "fare", 10))
-// makeHistogram(data, "age", 15)
-// console.log(makeHistogram(data, "age", 2))
+console.log(makeHistogram(data, "age", 2))
 
 // 7 ------------------------------------------------------------
 // normalizeProperty takes data and a property and returns an 
